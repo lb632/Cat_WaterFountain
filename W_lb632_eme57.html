@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Starter Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
+
+    <!-- Custom styles for this template -->
+    <link href="starter-template.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- <script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#obj">Project Objective</a></li>
+            <li><a href="#design">Design</a></li>
+            <li><a href="#drawings">Drawings</a></li>
+            <li><a href="#testing">Testing</a></li>
+            <li><a href="#result">Result</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>ECE5725 Project</h1>
+        <p class="lead">Tarzan’s Water Fountain<br>A Project By Elise Eckman, Lakshmi Aparna Bolla.</p>
+      </div>
+
+      <hr>
+      <div class="center-block">
+          <iframe width="640" height="360" src="https://www.youtube.com/watch?v=GuM8vTq0jd4" frameborder="0" allowfullscreen></iframe>
+          <h4 style="text-align:center;">Demonstration Video</h4>
+      </div>
+
+      <hr id="intro">
+
+      <div style="text-align:center;">
+              <h2>Introduction</h2>
+              <p style="text-align: left;padding: 0px 30px;"> The Cat Water Fountain is designed to turn on only when Elise’s cat, Tarzan, approaches the fountain. Any motion from humans and animals sets off the PIR sensor. This triggers an IR camera to take pictures. A Haar Cascade Classifier was trained with 1500 pictures of Tarzan and 1500 negative images. If the classifier detects Tarzan in the pictures captured by the IR camera, the relay switch closes, and the water pump delivers water to the fountain. OpenCV was used for computer vision capabilities. SIFT was found to be inappropriate for this application. The Haar Cascade Classifier was more appropriate, but greater attention to the training methods must happen for more accurate feature detection.</p>
+      </div>
+
+    <hr id='obj'>
+
+      <div class="row">
+          <div class="col-md-4" style="text-align:center;">
+          <img class="img-rounded" src="pics/tarzan.jpg" alt="Generic placeholder image" width="240" height="240">
+          </div>
+          <div class="col-md-8" style="font-size:18px;">
+          <h2>Project Objective:</h2>
+          <ul>
+              <li>The water fountain will turn on when Tarzan approaches it.</li>
+          </ul>
+          </div>
+      </div>
+
+    <hr id='design'>
+
+      <div style="text-align:center;">
+              <h2>Design</h2>
+              <p style="text-align: left;padding: 0px 30px;">The fountain was designed in SolidWorks. It consists of three stacked pieces. The bottom piece houses a Raspberry Pi4 (RPi4), a relay, a PIR sensor, a wide-angle camera, a 12V power source, and a 5V Raspberry Pi power source. The middle piece serves as a water basin and includes the water pump. The wires from the pump are funneled to the bottom piece for connection to the relay and 12V power source. This was sealed with hot glue so that water does not leak into the electronics housing. The top piece serves as the fountain and drains the water back to the basin. All fountain pieces were printed on the SLA Form 3 printer in the Rapid Prototyping Lab in Upson Hall.The hardware used in the fountain includes a RPi4, a PIR motion sensor, an IR camera, and a relay. The PIR motion sensor was manufactured by adafruit. It detects motion of humans and animals through sensing a change in IR emissions. Three wires - vcc, digital out, and ground - were connected to the 5V, GPIO pin 22, and ground on the RPi4. If motion is detected, a MakerFocus RPi4 IR camera that is mounted on the front of the fountain takes pictures. The SainSmart 2-Channel Relay Module switch, which is wired as Normally Open, closes if Tarzan is in the pictures. This action sends power to the LEDGLE mini submersible water pump. uxcell PVC clear vinyl tubing connected to the pump outlet funnels water to the nozzle of the fountain.OpenCV packages were used for computer vision. This was installed using the following lines of code: ‘sudo apt-get install libopencv-dev python-opencv -t buster’ and ‘sudo apt-get install python-opencv -t buster’. Four pictures taken by the camera 0.1 seconds apart from each other are sent to a Haar Cascade Classifier. This classifier was trained using 1500 positive pictures of Tarzan and 1500 negative pictures. Only around 300 of the pictures in each set were unique. The images were cropped to Tarzan’s face so that the patches on his face were obvious for training. After the training was complete, the resulting .xml file was used in the python code to determine if Tarzan was approaching the fountain. If the classifier finds that two of the four images contain Tarzan, the relay is triggered and the fountain turns on. Otherwise, it is assumed that Tarzan is not approaching the fountain. A flowchart of this process is shown in the Drawings section.</p>
+			  <img class="img-rounded" src="pics/1.jpg" alt="Generic placeholder image" width="240" height="240">
+			  <img class="img-rounded" src="pics/2.jpg" alt="Generic placeholder image" width="240" height="240">
+			  <img class="img-rounded" src="pics/3.jpg" alt="Generic placeholder image" width="240" height="240">
+			  <img class="img-rounded" src="pics/4.jpg" alt="Generic placeholder image" width="240" height="240">
+			  <div style="text-align:left;">
+				  <h2>Obstacles/Learnings</h2>	
+				  <ul>
+					  <li>The OpenCV installation was troublesome. Online forums suggest using the commands ‘sudo apt-get install libopencv-dev python-opencv’ and ‘sudo apt-get install python-opencv’. This resulted in broken pipe errors. Downgrading to the buster release by adding ‘-t buster’ solved the problem.</li>
+					  <li>Attempting to use the cv2.VideoCapture(0) function to extract frames from the camera. This is a common function when using the RPi camera, however, it never worked in the fountain code. Instead, the function ‘camera.capture’ was used with a ‘camera.close’ function at the end of the code, and it worked well. </li>
+					  <li>For a while, the PIR motion sensor was always outputting as high, and therefore, always detecting motion. Some documentation online has the vcc and group pins switched, which ended up being the problem. The correct documentation by adafruit is attached in the References section.</li>
+					  <li>Initially, the SIFT algorithm was implemented to detect Tarzan. The idea was that it could match key points in Tarzan’s fur pattern to different pictures of him. This did not work because the algorithm picked up very tiny breaks in his fur pattern that were not necessarily visible in all pictures. Also, Tarzan is not oriented the same way in all pictures, which makes it impossible for SIFT to match points from a reference picture.</li>
+					  <li>The Haar Cascade Classifier trains best if none of the negative images look similar to positive images. So, no cat is included in the negative image set. Also, all the positive images should have the same aspect ratio.</li>
+					  <li>The Haar Cascade Classifier training was unpredictable. Several classifiers were created by training with a small amount of Tarzan pictures, a medium amount of Tarzan pictures with his face cropped, and a large amount of Tarzan pictures with his face cropped. Although the reason is not obvious, the classifier trained with a medium amount of cropped Tarzan pictures performed the best. More analysis is necessary in the future to determine how to train effectively, rather than by brute force. There is a tradeoff between the number of mis-detections and false positives. If the Scale-factor and number of nearest neighbours to be considered in detection are high, the performance is more accurate but it misses detection at times. On the other hand, if they’re kept low, the number of miss detections are less but the number of false positives are high. These parameters are set depending on the background of the room where it's placed. Difference of behavior was observed in the lab compared to the initial testing room, the number of false positives were high. When it’s deployed at home, Elise modifies the values that best suites her home. One more quick solution is to use the haarcascade_frontalcatface.xml, available in the github repo of OpenCV. This is trained using thousands of cat images and does accurate cat face detection. This classifier can be used as a second level of classification, to avoid false positives. We haven’t included this part, as we want to showcase the effectiveness of our training. But in real time for better results, this can be included.</li>
+				  </ul>
+			  </div>
+	  </div>
+
+    <hr id='drawings'>
+      <div style="text-align:center;">
+			  <h2>Drawings</h2>
+			  <h2></h2>
+              <img class="img-rounded" src="pics/flow_chart.PNG" alt="Generic placeholder image" style="width:80%;">
+              <h4>Flowchart of the methodology</h4>         
+      </div>
+
+    <hr id='testing'>
+
+      <div style="text-align:center;">
+              <h2>Testing</h2>
+              <p style="text-align: left;padding: 0px 30px;"> Testing was conducted with pictures on a laptop since cats are not permitted in campus buildings. 15 different pictures of Tarzan and 14 different pictures of other cats were presented to the water fountain. Out of 15 tests with Tarzan images, there are 2 miss detections. Most of the time, all the 4 classifiers detected him, but in 1 case, only 2 faces were detected out of 4, but it’s still a hit as per our logic. Out of 14 negative testing with other cat images, there are 3 false positives for the images who look similar or have patterns on face similar to Tarzan. So, the classifier shows around 75% accuracy.</p>
+      </div>
+
+    <hr id='result'>
+
+      <div style="text-align:center;">
+              <h2>Result</h2>
+              <p style="text-align: left;padding: 0px 30px;"> Originally, a goal of the project was to use the SIFT algorithm to detect Tarzan for time and computational purposes. This proved to not be a great tool for detection. However, feature detection using a trained Haar Cascade Classifier was implemented as a backup. With this detection method, the water fountain reacts in the desired manner most of the time. It will occasionally detect Tarzan even if he is not there due to different objects in the background. The water fountain is more accurate when operating with a plain background. Also, the classifier will occasionally believe that other cats are Tarzan. This was expected since training optimization methods were not researched in depth. Overall, the fountain was successful for the end of semester project.</p>
+              <img class="img-rounded" src="pics/result.jpg" alt="Generic placeholder image" width="240" height="240">
+			  <img class="img-rounded" src="pics/res2.jpg" alt="Generic placeholder image" width="240" height="240">
+	  </div>
+
+    <hr>
+
+    <div class="row" style="text-align:center;">
+          <h2>Work Distribution</h2>
+          <div style="text-align:center;">
+              <img class="img-rounded" src="pics/group.jpg" alt="Generic placeholder image" style="width:80%;">
+              <h4>Project group picture</h4>
+          </div>
+          <div class="col-md-6" style="font-size:16px">
+              
+              <h3>Elise Eckman</h3>
+              <p class="lead">eme57@cornell.edu</p>
+              <p> Hardware, 3D Printing, Assembly, Testing.
+          </div>
+          <div class="col-md-6" style="font-size:16px">
+              <h3>Lakshmi Aparna Bolla</h3>
+              <p class="lead">lb632@cornell.edu</p>
+              <p>Training for Face detection, Code, Assembly, Testing.
+          </div>
+      </div>
+
+    <hr>
+      <div style="font-size:18px">
+          <h2>Parts List</h2>
+          <ul>
+              <li>Raspberry Pi $35.00</li>
+              <li>MakerFocus Raspberry Pi4 IR Camera: $24.59</li>
+              <li>SainSmart 2-Channel Relay Module: $7.99</li>
+			  <li>LEDGLE Mini Submersible Water Pump: $10.39</li>
+			  <li>ALITOVE DC 12V 1A Power Supply: $6.99 </li>
+			  <li>Waveshare Official Raspberry Pi USB-C Power Supply: $12.49 </li>
+			  <li>uxcell PVC Clear Vinyl Tubing: $8.99 </li>
+			  <li>3D Printed Parts: Free at Rapid Prototyping Lab </li>
+          </ul>
+          <h3>Total: $106.44</h3>
+      </div>
+      <hr>
+      <div style="font-size:18px">
+          <h2>References</h2>
+          <a href="https://cdn-learn.adafruit.com/downloads/pdf/pir-passive-infrared-proximity-motion-sensor.pdf">adafruit PIR Motion Sensor Datasheet</a><br>
+          <a href="https://www.youtube.com/watch?v=BVMeVGET_Ak">Connecting Pump to Relay</a><br>
+          <a href="https://www.codespeedy.com/fingerprint-detection-in-python/">SIFT example</a><br>
+          <a href="https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalcatface.xml">HaarCascadeCatFace_opencv</a><br>
+          <a href="https://amin-ahmadi.com/cascade-trainer-gui/">HaarCascadeClassifier</a><br>
+		  <h3>Referenced Class Projects:</h3>
+		  <a href="https://courses.ece.cornell.edu/ece5990/ECE5725_Spring2020_Projects/May_18_Demo/SmartKart/M_as2564_cea95_pjm355/smartKart-master/index.html">Smart Kart</a><br>
+		  <a href="https://courses.ece.cornell.edu/ece5990/ECE5725_Spring2021_Projects/May_19/Color%20By%20Number/Th_psk92_mm2563/index.html">Color By Numbers</a><br>
+		  
+      </div>
+
+    <hr>
+
+      <div class="row">
+              <h2>Code Appendix</h2>
+              <pre><code>
+#!/usr/bin/env python
+
+import RPi.GPIO as GPIO
+from time import sleep
+import os
+import sys
+import cv2
+from picamera import PiCamera
+camera = PiCamera()
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(22, GPIO.IN)
+GPIO.setup(5,GPIO.OUT)
+GPIO.output(5,1)
+#GPIO.setup(26, GPIO.IN,pull_up_down=GPIO.PUD_UP)
+
+try:
+    while True:
+        sleep(0.1)
+	  #Pin 22 is input from PIR Sensor
+        a = GPIO.input(22)
+        if a == 1:
+            print("Motion Detected")
+            picamera1 = camera.capture("/home/pi/picamera1.jpg")
+            sleep(0.2)
+            picamera2 = camera.capture("/home/pi/picamera2.jpg")
+            sleep(0.2)
+            picamera3 = camera.capture("/home/pi/picamera3.jpg")
+            sleep(0.2)
+            picamera4 = camera.capture("/home/pi/picamera4.jpg")
+		 
+		 #Save images captured by Camera
+            img1 = cv2.imread("/home/pi/picamera1.jpg")
+            img2 = cv2.imread("/home/pi/picamera2.jpg")
+            img3 = cv2.imread("/home/pi/picamera3.jpg")
+            img4 = cv2.imread("/home/pi/picamera4.jpg")
+
+#Converted them to gray level images as detection with Haar Classifier works well with grayscale images
+
+            gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+            gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+            gray3 = cv2.cvtColor(img3, cv2.COLOR_BGR2GRAY)
+            gray4 = cv2.cvtColor(img4, cv2.COLOR_BGR2GRAY)
+
+		 # Using the xml file generated from training
+            classifier = cv2.CascadeClassifier("/home/pi/cascade.xml")
+
+            counter = 0
+
+            #Detection
+            rectangles1 = classifier.detectMultiScale(gray1,1.7,3)
+            rectangles2 = classifier.detectMultiScale(gray2,1.7,3)
+            rectangles3 = classifier.detectMultiScale(gray3,1.7,3)
+            rectangles4 = classifier.detectMultiScale(gray4,1.7,3)
+            print(rectangles1)
+
+            list_lengths = []
+            list_lengths.append(len(rectangles1))
+            list_lengths.append(len(rectangles2))
+            list_lengths.append(len(rectangles3))
+            list_lengths.append(len(rectangles4))
+
+            print("********")
+            print(list_lengths)
+            print("*********")
+		
+            #Drawing rectangle around the detected area        
+            for (x,y,w,h) in rectangles1:
+                gray1 =cv2.rectangle(img1,(x,y),(x+w,y+h),(255,0,0),2)
+            for (x,y,w,h) in rectangles2:
+                gray2 =cv2.rectangle(img2,(x,y),(x+w,y+h),(255,0,0),2)
+            for (x,y,w,h) in rectangles3:
+                gray3 =cv2.rectangle(img3,(x,y),(x+w,y+h),(255,0,0),2)
+            for (x,y,w,h) in rectangles4:
+                gray4 =cv2.rectangle(img4,(x,y),(x+w,y+h),(255,0,0),2)
+
+            #Saving the result images to the directory
+            cv2.imwrite("/home/pi/result/result_withrect1.jpg",img1)
+            cv2.imwrite("/home/pi/result/result_withrect2.jpg",img2)
+            cv2.imwrite("/home/pi/result/result_withrect3.jpg",img3)
+            cv2.imwrite("/home/pi/result/result_withrect4.jpg",img4)
+
+		 #Logic to turn ON Motor
+            counter=0
+            for i in list_lengths:
+                if i>0:
+                    counter += 1
+            #print(counter)
+            if counter > 1:
+                print("I am here")
+                GPIO.output(5,0)
+                sleep(8)
+                GPIO.output(5,1)
+except KeyboardInterrupt:
+    camera.close()
+    GPIO.cleanup()
+
+finally:
+    camera.close()
+    GPIO.cleanup()
+
+              </code></pre>
+      </div>
+
+    </div><!-- /.container -->
+
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+  </body>
+</html>
